@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { getRoles, getAnswersByRole } from '../db/indexeddb'
 import type { Role, Answer } from '../db/indexeddb'
 import QuestionBlock from '../components/QuestionBlock'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const QUESTIONS = [
   'Come tratti in generale le persone con cui interagisci in questo ruolo?',
@@ -15,6 +16,7 @@ export default function RuoloDetail() {
   const { id } = useParams<{ id: string }>()
   const [role, setRole] = useState<Role | null>(null)
   const [answers, setAnswers] = useState<Answer[]>([])
+  usePageTitle(role ? role.name : 'Ruolo')
 
   async function load() {
     if (!id) return

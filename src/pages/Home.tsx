@@ -2,12 +2,14 @@ import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FiDownload, FiUpload } from 'react-icons/fi'
 import { exportData, importData } from '../db/indexeddb'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const navItems = [
   { label: 'RUOLO', path: '/ruolo' },
 ]
 
 export default function Home() {
+  usePageTitle()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [importStatus, setImportStatus] = useState<'idle' | 'ok' | 'error'>('idle')
 
@@ -31,6 +33,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 to-indigo-950 flex flex-col items-center pt-16 px-4">
+      <img src="/uACT/logo.svg" alt="uACT logo" className="w-16 h-16 mb-4 rounded-2xl shadow-lg shadow-purple-900/50" />
       <h1 className="text-6xl font-black text-white tracking-tight mb-2">uACT</h1>
       <p className="text-purple-300 text-lg mb-12">Your Acceptance and Commitment Therapy</p>
 

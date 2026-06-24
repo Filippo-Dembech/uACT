@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom'
 import { FiTrash2, FiPlus } from 'react-icons/fi'
 import { getRoles, addRole, deleteRole } from '../db/indexeddb'
 import type { Role } from '../db/indexeddb'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function Ruolo() {
   const [roles, setRoles] = useState<Role[]>([])
   const [creating, setCreating] = useState(false)
   const [newName, setNewName] = useState('')
+
+  usePageTitle('Ruoli')
 
   async function load() {
     setRoles(await getRoles())
