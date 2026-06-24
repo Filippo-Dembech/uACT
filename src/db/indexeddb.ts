@@ -124,3 +124,55 @@ export async function deleteAnswer(id: string): Promise<void> {
   const db = await openDB()
   await tx(db, 'answers', 'readwrite', (t) => t.objectStore('answers').delete(id))
 }
+
+// Export / Import
+
+export interface ExportData {
+  version: 1
+  exportedAt: number
+  roles: Role[]
+  answers: Answer[]
+}
+
+export async function exportData(): Promise<void> {
+  const db = await openDB()
+  const roles = await new Promise<Role[]>((resolve, reject) => {
+    const req = db.transaction('roles', 'readonly').objectStore('roles').getAll()
+    req.onsuccess = () => resolve(req.result)
+    req.onerror = () => reject(req.error)
+  })
+  const answers = await new Promise<Answer[]>((resolve, reject) => {
+    const req = db.transaction('answers', 'readonly').objectStore('answers').getAll()
+    req.onsuccess = () => resolve(req.result)
+    req.onerror = () => reject(req.error)
+  })
+
+  const payload: ExportData = { version: 1, exportedAt: Date.now(), roles, answers }
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `uACT-backup-${new Date().toISOString().slice(0, 10)}.json`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+export async function importData(file: File): Promise<void> {
+  const text = await file.text()
+  const data: ExportData = JSON.parse(text)
+  if (data.version !== 1 || !Array.isArray(data.roles) || !Array.isArray(data.answers)) {
+    throw new Error('File non valido')
+  }
+
+  const db = await openDB()
+
+  await new Promise<void>((resolve, reject) => {
+    const t = db.transaction(['roles', 'answers'], 'readwrite')
+    t.oncomplete = () => resolve()
+    t.onerror = () => reject(t.error)
+    const rolesStore = t.objectStore('roles')
+    const answersStore = t.objectStore('answers')
+    for (const role of data.roles) rolesStore.put(role)
+    for (const answer of data.answers) answersStore.put(answer)
+  })
+}
