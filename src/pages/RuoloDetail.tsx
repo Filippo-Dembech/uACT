@@ -4,13 +4,7 @@ import { getRoles, getAnswersByRole } from '../db/indexeddb'
 import type { Role, Answer } from '../db/indexeddb'
 import QuestionBlock from '../components/QuestionBlock'
 import { usePageTitle } from '../hooks/usePageTitle'
-
-const QUESTIONS = [
-  'Come tratti in generale le persone con cui interagisci in questo ruolo?',
-  'Cosa dici e fai quando la persona con cui interagisci è stressata, in difficoltà o attraversa un brutto momento?',
-  'Come ti tratta in generale secondo le persone con cui interagisci?',
-  'Quali sono le 3 migliori qualità che le persone con cui interagisci vedono in te?',
-]
+import { QUESTIONS } from '../content/questions'
 
 export default function RuoloDetail() {
   const { id } = useParams<{ id: string }>()
@@ -44,7 +38,7 @@ export default function RuoloDetail() {
 
         <h2 className="text-3xl font-black text-white mb-1">{role.name}</h2>
         <p className="text-purple-400 text-sm mb-8">
-          Immagina un'intervista con le persone con cui interagisci in questo ruolo. Come risponderebbero?
+          Immagina un'intervista con una persona con cui interagisci in questo ruolo. Come vorresti che rispondesse alla seguenti domande?
         </p>
 
         <div className="space-y-5">
