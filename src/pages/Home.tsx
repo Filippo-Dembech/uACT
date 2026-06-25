@@ -32,10 +32,10 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-950 to-indigo-950 flex flex-col items-center pt-16 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-950 to-indigo-950 flex flex-col items-center pt-16 px-5">
       <img src="/uACT/logo.svg" alt="uACT logo" className="w-16 h-16 mb-4 rounded-2xl shadow-lg shadow-purple-900/50" />
       <h1 className="text-6xl font-black text-white tracking-tight mb-2">uACT</h1>
-      <p className="text-purple-300 text-lg mb-12">Your Acceptance and Commitment Therapy</p>
+      <p className="text-purple-300 text-lg text-center mb-12">Your Acceptance and Commitment Therapy</p>
 
       <nav className="flex flex-wrap gap-3 justify-center">
         {navItems.map((item) => (
