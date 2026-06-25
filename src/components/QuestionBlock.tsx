@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FiEdit2, FiArchive, FiTrash2, FiRotateCcw, FiPlus, FiX } from 'react-icons/fi'
+import { FiEdit2, FiArchive, FiTrash2, FiRotateCcw, FiPlus, FiX, FiCheck } from 'react-icons/fi'
 import type { Answer } from '../db/indexeddb'
 import { addAnswer, updateAnswer, deleteAnswer } from '../db/indexeddb'
 
@@ -74,15 +74,17 @@ export default function QuestionBlock({ roleId, questionIndex, question, answers
                 />
                 <button
                   onClick={() => handleSaveEdit(a.id)}
-                  className="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-xs rounded-lg transition-colors"
+                  title="Salva"
+                  className="p-1.5 text-purple-400 hover:text-purple-200 transition-colors"
                 >
-                  Salva
+                  <FiCheck size={15} />
                 </button>
                 <button
                   onClick={() => setEditingId(null)}
-                  className="px-3 py-1.5 bg-purple-800 hover:bg-purple-700 text-purple-300 text-xs rounded-lg transition-colors"
+                  title="Annulla"
+                  className="p-1.5 text-purple-400 hover:text-purple-200 transition-colors"
                 >
-                  Annulla
+                  <FiX size={15} />
                 </button>
               </div>
             ) : (
@@ -129,15 +131,17 @@ export default function QuestionBlock({ roleId, questionIndex, question, answers
           />
           <button
             onClick={handleAdd}
-            className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-sm rounded-lg transition-colors"
+            title="Salva"
+            className="p-1.5 text-purple-400 hover:text-purple-200 transition-colors"
           >
-            Salva
+            <FiCheck size={15} />
           </button>
           <button
             onClick={() => { setShowInput(false); setInputText('') }}
-            className="px-3 py-2 bg-purple-800 hover:bg-purple-700 text-purple-300 text-sm rounded-lg transition-colors flex items-center"
+            title="Annulla"
+            className="p-1.5 text-purple-400 hover:text-purple-200 transition-colors"
           >
-            <FiX size={14} />
+            <FiX size={15} />
           </button>
         </div>
       ) : (
